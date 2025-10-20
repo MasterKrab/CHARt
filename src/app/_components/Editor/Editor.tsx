@@ -3,7 +3,7 @@
 import { api } from '@/trpc/react'
 import { Sketch } from '@uiw/react-color'
 import { Dotting, useBrush, useData, useDotting } from 'dotting'
-import type { DottingRef, PixelModifyItem } from 'dotting'
+import type { BrushTool, DottingRef, PixelModifyItem } from 'dotting'
 import { nanoid } from 'nanoid'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
@@ -84,7 +84,7 @@ const Editor = ({
 							key={`editor-tool-${nanoid()}`}
 							role="option"
 							aria-selected={tool === brushTool}
-							onClick={() => changeBrushTool(tool)}
+							onClick={() => changeBrushTool(tool as BrushTool)}
 						>
 							<StyledButtonToolSpan>
 								<Image src={image} alt={tool} fill={true} />

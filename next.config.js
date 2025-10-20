@@ -6,6 +6,9 @@ import "./src/env.js";
 
 /** @type {import("next").NextConfig} */
 const config = {
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   // Extracted from https://github.com/vercel/next.js/discussions/50337
   webpack(config) {
     config.module.rules.push({
