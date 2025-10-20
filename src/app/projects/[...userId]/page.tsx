@@ -14,11 +14,7 @@ const Projects = async ({
 }) => {
 	const { userId } = await params
 
-	if (!userId) {
-		const projects = await getProjectsForView()
-
-		return <Cards projects={projects} />
-	}
+	if (!userId) notFound()
 
 	const normalizedUserId = Array.isArray(userId) ? userId[0] : userId
 

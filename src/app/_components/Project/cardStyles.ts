@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { motion } from 'framer-motion'
 
 export const StyledContainer = styled(motion.article)<{
-	isClickable: boolean
+	$isClickable: boolean
 }>`
     position: relative;
     display: flex;
@@ -13,7 +13,7 @@ export const StyledContainer = styled(motion.article)<{
     align-items: start;
     gap: 1rem;
     padding: 1rem;
-    cursor: ${({ isClickable }) => (isClickable ? 'pointer' : 'default')};
+    cursor: ${({ $isClickable }) => ($isClickable ? 'pointer' : 'default')};
 `
 
 export const StyledBottomContainer = styled.div`
