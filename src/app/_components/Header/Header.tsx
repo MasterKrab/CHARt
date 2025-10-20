@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import { useState, type MouseEventHandler } from 'react'
-import { useRouter } from 'next/navigation'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -12,6 +11,7 @@ import ChevronDownIcon from '@/assets/icons/chevron-down.svg'
 import useProviders from '@/hooks/useProviders'
 import useMatchMedia from '@/hooks/useMatchMedia'
 import useBodyClassNames from '@/hooks/useBodyClassNames'
+import { toast } from 'react-hot-toast'
 
 import {
 	StyledHeader,

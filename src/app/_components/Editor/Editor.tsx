@@ -116,7 +116,7 @@ const Editor = ({
 				{isOpenColorPicker && (
 					<StyledColorPickerContainer>
 						<ColorPicker
-							color={color}
+							color={brushColor}
 							onChangeColor={(hex) => changeBrushColor(hex)}
 							onClickOutside={handleCloseColorPicker}
 						/>
