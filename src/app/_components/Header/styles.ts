@@ -27,7 +27,7 @@ export const StyledNavigation = styled.nav`
 
   @media (max-width: 768px) {
     font-size: 2.25rem;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
