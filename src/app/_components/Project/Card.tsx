@@ -27,7 +27,7 @@ const Card = ({ id, width, height, user, isEditMode = false }: CardProps) => {
 		<StyledContainer
 			initial={{ scale: 0.75, opacity: 0 }}
 			animate={{ scale: 1, opacity: 1 }}
-			isClickable={isEditMode}
+			$isClickable={isEditMode}
 		>
 			<Image
 				sizes="100vw"

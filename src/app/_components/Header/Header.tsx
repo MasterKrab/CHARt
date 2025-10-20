@@ -46,7 +46,13 @@ const Header = () => {
 		if (isOpenTooltip) setIsOpenTooltip(false)
 	}
 
-	const closeMenu = () => setIsOpenMenu(false)
+	const closeMenu = () => {
+		setIsOpenMenu(false)
+	}
+
+	const handleNavigate = () => {
+		toast('Creando proyecto...')
+	}
 
 	return (
 		<AnimatePresence>
@@ -76,7 +82,11 @@ const Header = () => {
 										</StyledLink>
 									</li>
 									<li>
-										<StyledLink href="/edit/new" onClick={closeMenu}>
+										<StyledLink
+											href="/edit/new"
+											onClick={closeMenu}
+											onNavigate={handleNavigate}
+										>
 											Nuevo proyecto
 										</StyledLink>
 									</li>
