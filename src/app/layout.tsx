@@ -7,6 +7,7 @@ import { Geist } from 'next/font/google'
 import StyledComponentsRegistry from '@/app/registry'
 import { TRPCReactProvider } from '@/trpc/react'
 import { SessionProvider } from 'next-auth/react'
+import { Toaster } from 'react-hot-toast'
 
 import Header from '@/app/_components/Header/Header'
 
@@ -31,6 +32,7 @@ export default function RootLayout({
 						<TRPCReactProvider>
 							<Header />
 							<main className="main">{children}</main>
+							<Toaster position="bottom-center" reverseOrder={false} />
 						</TRPCReactProvider>
 					</SessionProvider>
 				</StyledComponentsRegistry>

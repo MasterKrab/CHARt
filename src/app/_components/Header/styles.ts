@@ -6,7 +6,11 @@ import { motion } from 'framer-motion'
 
 import Link from 'next/link'
 
-export const StyledHeader = styled.header`
+export const StyledHeader = styled.header` 
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10000;
   display: flex;
   justify-content: space-between;
   align-items: center;

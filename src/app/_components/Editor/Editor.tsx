@@ -4,9 +4,9 @@ import { api } from '@/trpc/react'
 import { Dotting, useBrush, useData, useDotting } from 'dotting'
 import type { BrushTool, DottingRef, PixelModifyItem } from 'dotting'
 import { nanoid } from 'nanoid'
-import Image from 'next/image'
 import { useEffect, useRef, useState, type MouseEventHandler } from 'react'
 import ColorPicker from '@/app/_components/ColorPicker/ColorPicker'
+import { toast } from 'react-hot-toast'
 
 import {
 	StyledButtonTool,
@@ -51,14 +51,19 @@ const Editor = ({
 
 	const handleSave = async () => {
 		setIsSaving(true)
-		await updateProjectMutation.mutateAsync({
+
+		const promise = updateProjectMutation.mutateAsync({
 			id,
 			data: dataArray as unknown as PixelModifyItem[][],
 		})
-		setTimeout(() => {
-			setIsSaving(false)
-			setIsSaved(true)
-		}, 2000)
+
+		toast.promise(promise, {
+			loading: 'Guardando...',
+			success: <strong>Guardado</strong>,
+			error: <strong>Error guardando</strong>,
+		})
+
+		await promise
 	}
 
 	const handleToggleColorPicker: MouseEventHandler = (event) => {
