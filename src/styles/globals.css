@@ -1,0 +1,29 @@
+* {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 4rem 1fr;
+  min-height: 100vh;
+}
+
+.main {
+  height: 100%;
+  padding: 1rem;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  font-weight: normal;
+}
