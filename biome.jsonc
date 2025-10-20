@@ -27,7 +27,7 @@
 				"noNonNullAssertion": "off"
 			},
 			"recommended": true
-		}
+		},
 	},
 	"javascript": {
 		"formatter": {

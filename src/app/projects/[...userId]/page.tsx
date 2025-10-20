@@ -2,6 +2,7 @@
 import { notFound } from 'next/navigation'
 
 import { db } from '@/server/db'
+import { auth } from '@/server/auth'
 
 import Cards from '@/app/_components/Project/Cards'
 import getProjectsForView from '@/server/getProjectsForView'
@@ -31,7 +32,14 @@ const Projects = async ({
 
 	const projects = await getProjectsForView(normalizedUserId)
 
-	return <Cards projects={projects} />
+	const session = await auth()
+
+	return (
+		<Cards
+			projects={projects}
+			isEditMode={session?.user.id === normalizedUserId}
+		/>
+	)
 }
 
 export default Projects

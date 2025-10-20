@@ -34,26 +34,23 @@ export const StyledColorPickerContainer = styled.div`
     left: 0.5rem;
 `
 
-export const StyledButtonTool = styled.button`
+export const StyledButtonTool = styled.button<{
+	$isSelected: boolean
+}>`
     position: relative;
     display: grid;
-    background-color: white;
-    padding: 0.5rem;
+    place-content: center;
+    background-color: #eee;
     width: 2rem;
     height: 2rem;
-    border: 0.15rem black solid;
     border-radius: 50%;
-    transition:  transform 0.2s;
+    border:  ${({ $isSelected }) => ($isSelected ? 'black' : 'transparent')}  solid 0.15rem;
+    transition: transform 0.5s;
+    color: black;
 
     &:hover{
         transform: scale(1.2);
     }
-`
-
-export const StyledButtonToolSpan = styled.span`
-    position: relative;
-    width: 100%;
-    height: 100%;
 `
 
 const savingAnimation = keyframes`
@@ -67,7 +64,7 @@ export const StyledSaveButton = styled.button<{ $animate: string }>`
     top: 0.5rem;
     right: 0.5rem;
     padding: 0.5rem 1rem;
-    background-color: #50FA7B;
+    background-color: #eee;
     border: none;
     border-radius: 50%;
     padding: 0.5rem;
@@ -75,6 +72,7 @@ export const StyledSaveButton = styled.button<{ $animate: string }>`
     height: 2.5rem;
     animation: ${({ $animate }) => ($animate === 'true' ? savingAnimation : 'none')} 1s infinite;
     transition: opacity 0.5s ease-in-out;
+    color: black;
     
     &:hover{
         transform: ${({ $animate }) => ($animate === 'true' ? 'none' : 'scale(1.1)')};

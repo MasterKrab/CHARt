@@ -1,19 +1,33 @@
+'use client'
+
 import type { Project } from './types'
 
 import Image from 'next/image'
 
 import User from '@/app/_components/User/User'
-import { StyledContainer } from './cardStyles'
+import DeleteButton from '../DeleteProjectButton/DeleteProjectButton'
+
+import { StyledContainer, StyledBottomContainer } from './cardStyles'
+
+import { useRouter } from 'next/navigation'
 
 interface CardProps extends Project {
 	isEditMode?: boolean
 }
 
 const Card = ({ id, width, height, user, isEditMode = false }: CardProps) => {
+	const router = useRouter()
+
+	const handleClick = () => {
+		if (!isEditMode) return
+		router.push(`/edit/${id}`)
+	}
+
 	return (
 		<StyledContainer
 			initial={{ scale: 0.75, opacity: 0 }}
 			animate={{ scale: 1, opacity: 1 }}
+			isClickable={isEditMode}
 		>
 			<Image
 				sizes="100vw"
@@ -27,10 +41,12 @@ const Card = ({ id, width, height, user, isEditMode = false }: CardProps) => {
 				width={width * 50}
 				height={height * 50}
 				unoptimized={true}
+				onClick={handleClick}
 			/>
-			<div>
+			<StyledBottomContainer>
 				<User name={user.name} image={user.image} />
-			</div>
+				{isEditMode && <DeleteButton id={id} />}
+			</StyledBottomContainer>
 		</StyledContainer>
 	)
 }

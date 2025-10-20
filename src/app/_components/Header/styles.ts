@@ -29,6 +29,7 @@ export const StyledNavigation = styled.nav`
     z-index: 100;
     width: 100vw;
     height: 100vh;
+    overflow-y: auto;
   }
 `
 

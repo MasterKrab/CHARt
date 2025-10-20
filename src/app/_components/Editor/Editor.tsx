@@ -1,16 +1,15 @@
 'use client'
 
 import { api } from '@/trpc/react'
-import { Sketch } from '@uiw/react-color'
 import { Dotting, useBrush, useData, useDotting } from 'dotting'
 import type { BrushTool, DottingRef, PixelModifyItem } from 'dotting'
 import { nanoid } from 'nanoid'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type MouseEventHandler } from 'react'
+import ColorPicker from '@/app/_components/ColorPicker/ColorPicker'
 
 import {
 	StyledButtonTool,
-	StyledButtonToolSpan,
 	StyledColorButton,
 	StyledColorPickerContainer,
 	StyledEditorContainer,
@@ -62,7 +61,14 @@ const Editor = ({
 		}, 2000)
 	}
 
-	const handleToggleColorPicker = () => setIsOpenColorPicker(!isOpenColorPicker)
+	const handleToggleColorPicker: MouseEventHandler = (event) => {
+		event.stopPropagation()
+		setIsOpenColorPicker(!isOpenColorPicker)
+	}
+
+	const handleCloseColorPicker = () => {
+		setIsOpenColorPicker(!isOpenColorPicker)
+	}
 
 	return (
 		<>
@@ -75,20 +81,20 @@ const Editor = ({
 						border: 'none',
 					}}
 					backgroundColor="white"
-					brushColor="#000"
 					gridStrokeColor="rgba(0, 0, 0, 0.1)"
 				/>
+				{/* biome-ignore lint/a11y/useSemanticElements: <explanation> */}
 				<StyledToolsContainer role="listbox" aria-label="Herramientas">
-					{Object.entries(TOOLS_IMAGES).map(([tool, image]) => (
+					{Object.entries(TOOLS_IMAGES).map(([tool, Icon]) => (
 						<StyledButtonTool
 							key={`editor-tool-${nanoid()}`}
+							// biome-ignore lint/a11y/useSemanticElements: <explanation>
 							role="option"
 							aria-selected={tool === brushTool}
+							$isSelected={tool === brushTool}
 							onClick={() => changeBrushTool(tool as BrushTool)}
 						>
-							<StyledButtonToolSpan>
-								<Image src={image} alt={tool} fill={true} />
-							</StyledButtonToolSpan>
+							<Icon width={15} height={15} />
 						</StyledButtonTool>
 					))}
 				</StyledToolsContainer>
@@ -104,9 +110,10 @@ const Editor = ({
 
 				{isOpenColorPicker && (
 					<StyledColorPickerContainer>
-						<Sketch
-							color={brushColor}
-							onChange={({ hex }) => changeBrushColor(hex)}
+						<ColorPicker
+							color={color}
+							onChangeColor={(hex) => changeBrushColor(hex)}
+							onClickOutside={handleCloseColorPicker}
 						/>
 					</StyledColorPickerContainer>
 				)}

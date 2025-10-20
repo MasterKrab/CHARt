@@ -11,6 +11,7 @@ import ToolTip from '@/app/_components/ToolTip/ToolTip'
 import ChevronDownIcon from '@/assets/icons/chevron-down.svg'
 import useProviders from '@/hooks/useProviders'
 import useMatchMedia from '@/hooks/useMatchMedia'
+import useBodyClassNames from '@/hooks/useBodyClassNames'
 
 import {
 	StyledHeader,
@@ -23,14 +24,18 @@ import {
 	StyledButtonMenu,
 } from './styles'
 
+import './styles.css'
+
 const Header = () => {
-	const { data: session } = useSession()
+	const { data: session, status } = useSession()
 
 	const providers = useProviders()
 
 	const [isOpenTooltip, setIsOpenTooltip] = useState(false)
 	const [isOpenMenu, setIsOpenMenu] = useState(false)
 	const isDesktop = useMatchMedia('(min-width: 768px)')
+
+	useBodyClassNames(['open-menu'], !isOpenMenu)
 
 	const handleClickToggleToolTip: MouseEventHandler = (event) => {
 		event.stopPropagation()
@@ -67,7 +72,7 @@ const Header = () => {
 											href={`/projects/${session.user.id}`}
 											onClick={closeMenu}
 										>
-											Mis projectos
+											Mis proyectos
 										</StyledLink>
 									</li>
 									<li>
@@ -110,30 +115,35 @@ const Header = () => {
 						</ToolTip>
 					</StyledToolTipContainer>
 				) : (
-					<StyledToolTipContainer
-						initial={{ scale: 0 }}
-						animate={{ scale: 1 }}
-						exit={{ scale: 0 }}
-					>
-						<motion.span
+					status !== 'loading' && (
+						<StyledToolTipContainer
 							initial={{ scale: 0 }}
 							animate={{ scale: 1 }}
 							exit={{ scale: 0 }}
 						>
-							<button type="button" onClick={handleClickToggleToolTip}>
-								Iniciar sesión
-							</button>
-						</motion.span>
-						<ToolTip isOpen={isOpenTooltip} onClose={closeToolTip}>
-							{Object.values(providers).map(({ id, name }) => (
-								<li key={id}>
-									<StyledToolTipButton type="button" onClick={() => signIn(id)}>
-										{name}
-									</StyledToolTipButton>
-								</li>
-							))}
-						</ToolTip>
-					</StyledToolTipContainer>
+							<motion.span
+								initial={{ scale: 0 }}
+								animate={{ scale: 1 }}
+								exit={{ scale: 0 }}
+							>
+								<button type="button" onClick={handleClickToggleToolTip}>
+									Iniciar sesión
+								</button>
+							</motion.span>
+							<ToolTip isOpen={isOpenTooltip} onClose={closeToolTip}>
+								{Object.values(providers).map(({ id, name }) => (
+									<li key={id}>
+										<StyledToolTipButton
+											type="button"
+											onClick={() => signIn(id)}
+										>
+											{name}
+										</StyledToolTipButton>
+									</li>
+								))}
+							</ToolTip>
+						</StyledToolTipContainer>
+					)
 				)}
 			</StyledHeader>
 		</AnimatePresence>
