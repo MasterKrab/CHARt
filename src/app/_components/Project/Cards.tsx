@@ -2,7 +2,6 @@ import type { Project } from './types'
 
 import Masonry from '@/app/_components/Masonry/Masonry'
 import Card from './Card'
-import { StyledCardsContainer } from './cardsStyles'
 
 interface CardsProps {
 	projects: Project[]
@@ -11,7 +10,7 @@ interface CardsProps {
 
 const Cards = ({ projects, isEditMode = false }: CardsProps) => {
 	return (
-		<StyledCardsContainer>
+		<article>
 			<Masonry>
 				{projects.map(({ id, width, height, user }) => (
 					<Card
@@ -24,7 +23,7 @@ const Cards = ({ projects, isEditMode = false }: CardsProps) => {
 					/>
 				))}
 			</Masonry>
-		</StyledCardsContainer>
+		</article>
 	)
 }
 

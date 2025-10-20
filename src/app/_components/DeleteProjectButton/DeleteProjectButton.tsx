@@ -5,7 +5,6 @@ import { useState } from 'react'
 import { api } from '@/trpc/react'
 
 import { StyledButton } from './styles'
-import TrashIcon from '@/assets/icons/trash.svg'
 
 const ButtonDelete = ({
 	id,
@@ -26,11 +25,9 @@ const ButtonDelete = ({
 	return (
 		<StyledButton
 			type="button"
-			aria-label="Borrar proyecto"
 			onClick={handleClickDelete}
 			disabled={isLoading}
 		>
-			<TrashIcon color="#FF5555" width={24} height={24} />
 			{isLoading ? 'Borrando' : 'Borrar'}
 		</StyledButton>
 	)

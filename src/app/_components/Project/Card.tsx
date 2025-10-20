@@ -5,7 +5,7 @@ import type { Project } from './types'
 import Image from 'next/image'
 
 import User from '@/app/_components/User/User'
-import DeleteButton from '../DeleteProjectButton/DeleteProjectButton'
+import DeleteButton from '@/app/_components/DeleteProjectButton/DeleteProjectButton'
 
 import { StyledContainer, StyledBottomContainer } from './cardStyles'
 
