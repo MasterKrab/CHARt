@@ -4,6 +4,7 @@ import { useState, createContext, useEffect } from 'react'
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components'
 import { themes, type ThemeValue, THEMES } from '@/styles/theme'
 import GlobalStyles from '@/styles/globals'
+import useMatchMedia from '@/hooks/useMatchMedia'
 
 export const ThemeContext = createContext<{
 	theme: ThemeValue
@@ -17,11 +18,14 @@ const ThemeProvider = ({
 }: {
 	children: React.ReactNode
 }) => {
+	const prefersDarkMode = useMatchMedia('(prefers-color-scheme: dark)')
 	const [theme, setTheme] = useState<ThemeValue>(THEMES.LIGHT)
 
 	useEffect(() => {
 		const storedTheme = window.localStorage.getItem('theme') as ThemeValue
-		setTheme(storedTheme)
+
+		if (Object.values(THEMES).includes(storedTheme)) setTheme(storedTheme)
+		else setTheme(prefersDarkMode ? THEMES.DARK : THEMES.LIGHT)
 	}, [])
 
 	const changeTheme = (theme: ThemeValue) => {
