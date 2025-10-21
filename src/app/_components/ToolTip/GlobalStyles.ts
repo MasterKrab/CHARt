@@ -6,7 +6,7 @@ const GlobalStyles = createGlobalStyle<{
 }>`
 .tooltip {
   position: absolute;
-  bottom: var(--tooltip-bottom);
+  top: var(--tooltip-top);
   right: 0;
   z-index: 100000;
   display: grid;

@@ -117,7 +117,7 @@ export const StyledToolTipContainer = styled(motion.div)`
   justify-content: center;
   gap: 0.5rem;
   width: min-content;
-  --tooltip-bottom: -6.5rem;
+  --tooltip-top: 3.35rem;
 
 `
 
