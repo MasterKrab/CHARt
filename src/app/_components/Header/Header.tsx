@@ -115,7 +115,7 @@ const Header = () => {
 								aria-label="Abrir menu"
 								onClick={handleClickToggleToolTip}
 							>
-								<ChevronDownIcon />
+								<ChevronDownIcon width="1.5rem" height="1rem" />
 							</StyledOpenToolTipButton>
 							<ToolTip isOpen={isOpenTooltip} onClose={closeToolTip}>
 								<StyledOpenToolTipButton
