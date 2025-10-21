@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, createContext } from 'react'
+import { useState, createContext, useEffect } from 'react'
 import { ThemeProvider as StyledComponentsThemeProvider } from 'styled-components'
 import { themes, type ThemeValue, THEMES } from '@/styles/theme'
 import GlobalStyles from '@/styles/globals'
@@ -17,9 +17,12 @@ const ThemeProvider = ({
 }: {
 	children: React.ReactNode
 }) => {
-	const [theme, setTheme] = useState<ThemeValue>(
-		(window.localStorage.getItem('theme') as ThemeValue) || THEMES.LIGHT,
-	)
+	const [theme, setTheme] = useState<ThemeValue>(THEMES.LIGHT)
+
+	useEffect(() => {
+		const storedTheme = window.localStorage.getItem('theme') as ThemeValue
+		setTheme(storedTheme)
+	}, [])
 
 	const changeTheme = (theme: ThemeValue) => {
 		setTheme(theme)
