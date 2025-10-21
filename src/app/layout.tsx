@@ -23,12 +23,13 @@ export default function RootLayout({
 		<ThemeProvider>
 			<html lang="en">
 				<body className={pixelify.className}>
-					{/* Configuration extracted from https://medium.com/@ahmadreys/how-to-add-toploader-in-next-js-with-typescript-13e2f833eb19 */}
+					{/* NextTopLoader Configuration extracted from https://medium.com/@ahmadreys/how-to-add-toploader-in-next-js-with-typescript-13e2f833eb19 */}
 					<NextTopLoader
 						color="#2299DD"
 						initialPosition={0.08}
 						crawlSpeed={200}
 						height={3}
+						showSpinner={false}
 						crawl={true}
 						easing="ease"
 						speed={200}
