@@ -30,6 +30,7 @@ const CreateProjectButton = () => {
 		const { id } = await promise
 
 		router.push(`/edit/${id}`)
+		setIsLoading(false)
 	}
 
 	return (
