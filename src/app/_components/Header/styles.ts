@@ -1,13 +1,13 @@
 'use client'
 
+import type { Theme } from '@/styles/theme'
 import styled from 'styled-components'
-
 import { motion } from 'framer-motion'
-
 import Link from 'next/link'
 
-export const StyledHeader = styled.header` 
-  background-color: white;
+export const StyledHeader = styled.header<{
+	theme: Theme
+}>` 
   position: sticky;
   top: 0;
   z-index: 10000;
@@ -15,15 +15,22 @@ export const StyledHeader = styled.header`
   align-items: center;
   padding: 1rem 2rem;
   gap: 1rem;
-  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
+  background-color: ${({ theme }) => theme.background};
+  box-shadow: 0 0 1rem ${({ theme }) => theme.shadowColor};
+  color: ${({ theme }) => theme.primary};
+  transition: var(--transition-theme);
 `
 
-export const StyledNavigation = styled.nav`
+export const StyledNavigation = styled.nav<{
+	theme: Theme
+}>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
+  background-color: ${({ theme }) => theme.background};
   font-size: 1.25rem;
+  margin-right: auto;
+  transition: var(--transition-theme);
 
   @media (max-width: 768px) {
     font-size: 2.25rem;
@@ -54,16 +61,20 @@ export const StyledList = styled.ul`
 `
 
 // Extracted styles for this component from https://github.com/MasterKrab/ajpc-webpage/blob/main/src/components/Header.astro
-export const StyledButtonMenu = styled.button<{ $isOpen: string }>`
+export const StyledButtonMenu = styled.button<{
+	theme: Theme
+	$isOpen: string
+}>`
   position: relative;
   z-index: 100000;
   display: block;
   justify-self: end;
   width: 2rem;
   height: 1.5rem;
-  border-top: 0.25rem solid black;
+  border-top: 0.25rem solid ${({ theme }) => theme.primary};
   transition: border-top-color 0.2s ease-in-out;
-  border-top-color:  ${({ $isOpen }) => ($isOpen === 'true' ? 'transparent' : 'black')};;
+  border-top-color:  ${({ $isOpen, theme }) => ($isOpen === 'true' ? 'transparent' : theme.primary)};
+  margin-right: auto;
 
   &::before,
   &::after {
@@ -73,7 +84,7 @@ export const StyledButtonMenu = styled.button<{ $isOpen: string }>`
     display: block;
     width: 2rem;
     height: 0.2rem;
-    background-color: black;
+    background-color: ${({ theme }) => theme.primary};
     transition: transform 0.3s ease-in-out;
   }
 
@@ -105,8 +116,9 @@ export const StyledToolTipContainer = styled(motion.div)`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  width: min-content;
   --tooltip-bottom: -3.25rem;
-  margin-left: auto;
+  
 `
 
 export const StyledToolTipButton = styled.button`
@@ -114,7 +126,28 @@ export const StyledToolTipButton = styled.button`
   width: 100%;
 `
 
-export const StyledOpenToolTipButton = styled.button`
+export const StyledOpenToolTipButton = styled.button<{ theme: Theme }>`
   display: grid;
   place-content: center;
+  color: ${({ theme }) => theme.primary};
+`
+
+export const StyledRightHeaderContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+`
+
+export const StyledLoginButton = styled.button<{
+	theme: Theme
+}>`
+  background-color: ${({ theme }) => theme.active};
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: transform 0.25s;
+  width: max-content;
+
+  &:hover{
+    transform: scale(1.1);
+  }
 `

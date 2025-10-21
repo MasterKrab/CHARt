@@ -6,6 +6,7 @@ import Image from 'next/image'
 
 import User from '@/app/_components/User/User'
 import DeleteButton from '@/app/_components/DeleteProjectButton/DeleteProjectButton'
+import createRectanglesPatterns from '@/utils/createRectanglesPatterns'
 
 import { StyledContainer, StyledBottomContainer } from './cardStyles'
 
@@ -41,7 +42,7 @@ const Card = ({ id, width, height, user, isEditMode = false }: CardProps) => {
 				style={{
 					width: '100%',
 					height: 'auto',
-					border: '2px solid #ccc',
+					...createRectanglesPatterns({}),
 				}}
 				width={width * 50}
 				height={height * 50}

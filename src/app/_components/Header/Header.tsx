@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import User from '@/app/_components/User/User'
 import ToolTip from '@/app/_components/ToolTip/ToolTip'
 import CreateProjectButton from '@/app/_components/CreateProjectButton/CreateProjectButton'
+import ThemeSelector from '@/app/_components/ThemeSelector/ThemeSelector'
 import ChevronDownIcon from '@/assets/icons/chevron-down.svg'
 import useProviders from '@/hooks/useProviders'
 import useMatchMedia from '@/hooks/useMatchMedia'
@@ -23,6 +24,8 @@ import {
 	StyledToolTipButton,
 	StyledOpenToolTipButton,
 	StyledButtonMenu,
+	StyledRightHeaderContainer,
+	StyledLoginButton,
 } from './styles'
 
 import './styles.css'
@@ -96,60 +99,70 @@ const Header = () => {
 					/>
 				)}
 
-				{session && isDesktop && <CreateProjectButton />}
+				<StyledRightHeaderContainer>
+					{session && isDesktop && <CreateProjectButton />}
 
-				{session?.user ? (
-					<StyledToolTipContainer
-						initial={{ scale: 0 }}
-						animate={{ scale: 1 }}
-						exit={{ scale: 0 }}
-						onClick={handleClickToggleToolTip}
-					>
-						<User name={session.user.name!} image={session.user.image!} />
-						<StyledOpenToolTipButton
-							type="button"
-							aria-label="Abrir menu"
-							onClick={handleClickToggleToolTip}
-						>
-							<ChevronDownIcon width={24} height={24} />
-						</StyledOpenToolTipButton>
-						<ToolTip isOpen={isOpenTooltip} onClose={closeToolTip}>
-							<StyledOpenToolTipButton type="button" onClick={() => signOut()}>
-								Cerrar sesión
-							</StyledOpenToolTipButton>
-						</ToolTip>
-					</StyledToolTipContainer>
-				) : (
-					status !== 'loading' && (
+					{session?.user ? (
 						<StyledToolTipContainer
 							initial={{ scale: 0 }}
 							animate={{ scale: 1 }}
 							exit={{ scale: 0 }}
+							onClick={handleClickToggleToolTip}
 						>
-							<motion.span
+							<User name={session.user.name!} image={session.user.image!} />
+							<StyledOpenToolTipButton
+								type="button"
+								aria-label="Abrir menu"
+								onClick={handleClickToggleToolTip}
+							>
+								<ChevronDownIcon />
+							</StyledOpenToolTipButton>
+							<ToolTip isOpen={isOpenTooltip} onClose={closeToolTip}>
+								<StyledOpenToolTipButton
+									type="button"
+									onClick={() => signOut()}
+								>
+									Cerrar sesión
+								</StyledOpenToolTipButton>
+							</ToolTip>
+						</StyledToolTipContainer>
+					) : (
+						status !== 'loading' && (
+							<StyledToolTipContainer
 								initial={{ scale: 0 }}
 								animate={{ scale: 1 }}
 								exit={{ scale: 0 }}
 							>
-								<button type="button" onClick={handleClickToggleToolTip}>
-									Iniciar sesión
-								</button>
-							</motion.span>
-							<ToolTip isOpen={isOpenTooltip} onClose={closeToolTip}>
-								{Object.values(providers).map(({ id, name }) => (
-									<li key={id}>
-										<StyledToolTipButton
-											type="button"
-											onClick={() => signIn(id)}
-										>
-											{name}
-										</StyledToolTipButton>
-									</li>
-								))}
-							</ToolTip>
-						</StyledToolTipContainer>
-					)
-				)}
+								<motion.span
+									initial={{ scale: 0 }}
+									animate={{ scale: 1 }}
+									exit={{ scale: 0 }}
+								>
+									<StyledLoginButton
+										type="button"
+										onClick={handleClickToggleToolTip}
+									>
+										Iniciar sesión
+									</StyledLoginButton>
+								</motion.span>
+								<ToolTip isOpen={isOpenTooltip} onClose={closeToolTip}>
+									{Object.values(providers).map(({ id, name }) => (
+										<li key={id}>
+											<StyledToolTipButton
+												type="button"
+												onClick={() => signIn(id)}
+											>
+												{name}
+											</StyledToolTipButton>
+										</li>
+									))}
+								</ToolTip>
+							</StyledToolTipContainer>
+						)
+					)}
+
+					<ThemeSelector />
+				</StyledRightHeaderContainer>
 			</StyledHeader>
 		</AnimatePresence>
 	)

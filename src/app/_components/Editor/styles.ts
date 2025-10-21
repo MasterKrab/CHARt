@@ -1,5 +1,6 @@
 'use client'
 
+import type { Theme } from '@/styles/theme'
 import styled, { keyframes } from 'styled-components'
 
 export const StyledEditorContainer = styled.section`
@@ -25,7 +26,10 @@ export const StyledTopLeftContainer = styled.section`
     gap: 1rem;
 `
 
-export const StyledColorButton = styled.button<{ color: string }>`
+export const StyledColorButton = styled.button<{
+	theme: Theme
+	color: string
+}>`
     position: absolute;
     left: 0.5rem;
     bottom: 0.5rem;
@@ -33,7 +37,7 @@ export const StyledColorButton = styled.button<{ color: string }>`
     height: 2rem;
     background-color: ${({ color }) => color};    
     border: 0.25rem solid white;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 1rem ${({ theme }) => theme.shadowColor};
 `
 
 export const StyledColorPickerContainer = styled.div`
@@ -43,18 +47,19 @@ export const StyledColorPickerContainer = styled.div`
 `
 
 export const StyledButtonTool = styled.button<{
+	theme: Theme
 	$isSelected: boolean
 }>`
     position: relative;
     display: grid;
-    place-content: center;
-    background-color: #eee;
-    width: 2rem;
-    height: 2rem;
+    place-items: center;
+    background-color: ${({ theme }) => theme.primary};
+    width: 2.15rem;
+    height: 2.15rem;
     border-radius: 50%;
-    border:  ${({ $isSelected }) => ($isSelected ? 'black' : 'transparent')}  solid 0.15rem;
+    border:  ${({ $isSelected, theme }) => ($isSelected ? theme.tertiary : 'transparent')}  solid 0.15rem;
     transition: transform 0.5s;
-    color: black;
+    color: ${({ theme }) => theme.tertiary};
 
     &:hover{
         transform: scale(1.2);
@@ -67,23 +72,27 @@ const savingAnimation = keyframes`
     100% { transform: scale(1);  }
 `
 
-export const StyledSaveButton = styled.button<{ $animate: string }>`
+export const StyledSaveButton = styled.button<{
+	theme: Theme
+	$animate: boolean
+}>`
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
     padding: 0.5rem 1rem;
-    background-color: #eee;
+    background-color: ${({ theme }) => theme.primary};
     border: none;
     border-radius: 50%;
-    padding: 0.5rem;
+    padding: 0.3rem;
     width: 2.5rem;
     height: 2.5rem;
-    animation: ${({ $animate }) => ($animate === 'true' ? savingAnimation : 'none')} 1s infinite;
+    animation: ${({ $animate }) => ($animate ? savingAnimation : 'none')} 1s infinite;
     transition: opacity 0.5s ease-in-out;
-    color: black;
+    color: ${({ theme }) => theme.active};
+    border: 0.25rem solid ${({ theme }) => theme.active};
     
     &:hover{
-        transform: ${({ $animate }) => ($animate === 'true' ? 'none' : 'scale(1.1)')};
+        transform: ${({ $animate }) => ($animate ? 'none' : 'scale(1.1)')};
     }
 
     &:disabled{

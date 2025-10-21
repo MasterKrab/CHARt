@@ -4,10 +4,11 @@
 
 import type { ReactNode } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useContext } from 'react'
 import useWindowEvent from '@/hooks/useWindowEvent'
-
-import './styles.css'
+import GlobalStyles from './GlobalStyles'
+import { ThemeContext } from '@/styles/ThemeProvider'
+import { themes } from '@/styles/theme'
 
 interface ToolTipProps {
 	isOpen: boolean
@@ -16,6 +17,7 @@ interface ToolTipProps {
 }
 
 const ToolTip = ({ isOpen, onClose = () => {}, children }: ToolTipProps) => {
+	const { theme } = useContext(ThemeContext)
 	const tooltip = useRef<HTMLUListElement>(null)
 
 	const handleClick = (e: Event) => {
@@ -34,6 +36,7 @@ const ToolTip = ({ isOpen, onClose = () => {}, children }: ToolTipProps) => {
 
 	return (
 		<>
+			<GlobalStyles {...themes[theme]} />
 			<AnimatePresence>
 				{isOpen && (
 					<motion.ul

@@ -1,12 +1,15 @@
 'use client'
 
-import { api } from '@/trpc/react'
+import { useContext } from 'react'
 import { Dotting, useBrush, useData, useDotting } from 'dotting'
 import type { BrushTool, DottingRef, PixelModifyItem } from 'dotting'
 import { nanoid } from 'nanoid'
 import { useEffect, useRef, useState, type MouseEventHandler } from 'react'
-import ColorPicker from '@/app/_components/ColorPicker/ColorPicker'
 import { toast } from 'react-hot-toast'
+import { api } from '@/trpc/react'
+import { ThemeContext } from '@/styles/ThemeProvider'
+import { themes } from '@/styles/theme'
+import ColorPicker from '@/app/_components/ColorPicker/ColorPicker'
 
 import {
 	StyledButtonTool,
@@ -40,6 +43,7 @@ const Editor = ({
 	const { setData, undo, redo } = useDotting(ref)
 	const { changeBrushColor, changeBrushTool, brushTool, brushColor } =
 		useBrush(ref)
+	const { theme } = useContext(ThemeContext)
 
 	const updateProjectMutation = api.project.update.useMutation()
 
@@ -87,8 +91,9 @@ const Editor = ({
 				style={{
 					border: 'none',
 				}}
-				backgroundColor="white"
-				gridStrokeColor="rgba(0, 0, 0, 0.1)"
+				backgroundColor="transparent"
+				defaultPixelColor=""
+				gridStrokeColor={themes[theme]['gridStroke']}
 				maxColumnCount={100}
 				maxRowCount={100}
 			/>
@@ -100,7 +105,7 @@ const Editor = ({
 					aria-label="Restablecer cambio"
 					$isSelected={false}
 				>
-					<UndoIcon width={24} height={24} />
+					<UndoIcon width="100%" height="100%" />
 				</StyledButtonTool>
 				<StyledButtonTool
 					type="button"
@@ -108,7 +113,7 @@ const Editor = ({
 					aria-label="Retroceder cambio"
 					$isSelected={false}
 				>
-					<RedoIcon width={24} height={24} />
+					<RedoIcon width="100%" height="100%" />
 				</StyledButtonTool>
 			</StyledTopLeftContainer>
 
@@ -150,7 +155,7 @@ const Editor = ({
 			<StyledSaveButton
 				onClick={handleSave}
 				disabled={isSaved}
-				$animate={`${isSaving || isSaved}`}
+				$animate={isSaving}
 			>
 				<SaveIcon width="100%" height="100%" />
 			</StyledSaveButton>

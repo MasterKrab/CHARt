@@ -1,14 +1,18 @@
 'use client'
 
+import type { Theme } from '@/styles/theme'
 import styled from 'styled-components'
 
-export const StyledSection = styled.section`
+export const StyledSection = styled.section<{
+	theme: Theme
+}>`
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
   gap: 0.5rem;
   font-size: 1.25rem;
-`
+  color: ${({ theme }) => theme.primary};
+  `
 
 export const StyledName = styled.p`
   margin-top: 0;

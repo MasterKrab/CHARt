@@ -1,14 +1,15 @@
 import '@/styles/modern-normalize.css'
-import '@/styles/globals.css'
 
 // import type { Metadata } from "next";
-import { Geist } from 'next/font/google'
+import { Pixelify_Sans } from 'next/font/google'
 
 import StyledComponentsRegistry from '@/app/registry'
 import { TRPCReactProvider } from '@/trpc/react'
 import { SessionProvider } from 'next-auth/react'
+import NextTopLoader from 'nextjs-toploader'
 import { Toaster } from 'react-hot-toast'
 
+import ThemeProvider from '@/styles/ThemeProvider'
 import Header from '@/app/_components/Header/Header'
 
 // export const metadata: Metadata = {
@@ -17,26 +18,27 @@ import Header from '@/app/_components/Header/Header'
 // 	icons: [{ rel: "icon", url: "/favicon.ico" }],
 // };
 
-const geist = Geist({
-	subsets: ['latin'],
-})
+const pixelify = Pixelify_Sans()
 
 export default function RootLayout({
 	children,
 }: Readonly<{ children: React.ReactNode }>) {
 	return (
-		<html lang="en">
-			<body className={geist.className}>
-				<StyledComponentsRegistry>
-					<SessionProvider>
-						<TRPCReactProvider>
-							<Header />
-							<main className="main">{children}</main>
-							<Toaster position="bottom-center" reverseOrder={false} />
-						</TRPCReactProvider>
-					</SessionProvider>
-				</StyledComponentsRegistry>
-			</body>
-		</html>
+		<ThemeProvider>
+			<html lang="en">
+				<body className={pixelify.className}>
+					<StyledComponentsRegistry>
+						<NextTopLoader />
+						<SessionProvider>
+							<TRPCReactProvider>
+								<Header />
+								<main className="main">{children}</main>
+								<Toaster position="bottom-center" reverseOrder={false} />
+							</TRPCReactProvider>
+						</SessionProvider>
+					</StyledComponentsRegistry>
+				</body>
+			</html>
+		</ThemeProvider>
 	)
 }

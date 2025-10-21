@@ -1,8 +1,13 @@
+'use client'
+
+import type { Theme } from '@/styles/theme'
+
 import styled from 'styled-components'
 
-export const StyledButton = styled.button`
-  background-color: #50FA7B;
-  color: white;
+export const StyledButton = styled.button<{
+	theme: Theme
+}>`
+  background-color: ${({ theme }) => theme.active};
   font-weight: bold;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
