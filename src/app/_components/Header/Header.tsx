@@ -22,7 +22,7 @@ import {
 	StyledLink,
 	StyledToolTipContainer,
 	StyledToolTipButton,
-	StyledOpenToolTipButton,
+	StyledOpenToolTipButton,https://cha-rt.vercel.app/
 	StyledButtonMenu,
 } from './styles'
 
@@ -97,7 +97,7 @@ const Header = () => {
 					/>
 				)}
 
-				{isDesktop && <CreateProjectButton />}
+				{(session && isDesktop) && <CreateProjectButton />}
 
 				{session?.user ? (
 					<StyledToolTipContainer
