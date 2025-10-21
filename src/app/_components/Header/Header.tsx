@@ -4,14 +4,16 @@ import Image from 'next/image'
 import { useState, type MouseEventHandler } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { toast } from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
 import User from '@/app/_components/User/User'
 import ToolTip from '@/app/_components/ToolTip/ToolTip'
+import CreateProjectButton from '@/app/_components/CreateProjectButton/CreateProjectButton'
 import ChevronDownIcon from '@/assets/icons/chevron-down.svg'
 import useProviders from '@/hooks/useProviders'
 import useMatchMedia from '@/hooks/useMatchMedia'
 import useBodyClassNames from '@/hooks/useBodyClassNames'
-import { toast } from 'react-hot-toast'
 
 import {
 	StyledHeader,
@@ -29,13 +31,13 @@ import './styles.css'
 const Header = () => {
 	const { data: session, status } = useSession()
 
+	const router = useRouter()
 	const providers = useProviders()
-
 	const [isOpenTooltip, setIsOpenTooltip] = useState(false)
 	const [isOpenMenu, setIsOpenMenu] = useState(false)
 	const isDesktop = useMatchMedia('(min-width: 768px)')
 
-	useBodyClassNames(['open-menu'], !isOpenMenu)
+	useBodyClassNames(!isDesktop && isOpenMenu ? ['open-menu'] : [])
 
 	const handleClickToggleToolTip: MouseEventHandler = (event) => {
 		event.stopPropagation()
@@ -48,10 +50,6 @@ const Header = () => {
 
 	const closeMenu = () => {
 		setIsOpenMenu(false)
-	}
-
-	const handleNavigate = () => {
-		toast('Creando proyecto...')
 	}
 
 	return (
@@ -81,15 +79,11 @@ const Header = () => {
 											Mis proyectos
 										</StyledLink>
 									</li>
-									<li>
-										<StyledLink
-											href="/edit/new"
-											onClick={closeMenu}
-											onNavigate={handleNavigate}
-										>
-											Nuevo proyecto
-										</StyledLink>
-									</li>
+									{!isDesktop && (
+										<li>
+											<CreateProjectButton />
+										</li>
+									)}
 								</>
 							)}
 						</StyledList>
@@ -102,6 +96,8 @@ const Header = () => {
 						$isOpen={`${isOpenMenu}`}
 					/>
 				)}
+
+				{isDesktop && <CreateProjectButton />}
 
 				{session?.user ? (
 					<StyledToolTipContainer
@@ -119,9 +115,9 @@ const Header = () => {
 							<ChevronDownIcon width={24} height={24} />
 						</StyledOpenToolTipButton>
 						<ToolTip isOpen={isOpenTooltip} onClose={closeToolTip}>
-							<StyledToolTipButton type="button" onClick={() => signOut()}>
+							<StyledOpenToolTipButton type="button" onClick={() => signOut()}>
 								Cerrar sesión
-							</StyledToolTipButton>
+							</StyledOpenToolTipButton>
 						</ToolTip>
 					</StyledToolTipContainer>
 				) : (

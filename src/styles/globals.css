@@ -9,7 +9,7 @@ html {
 body {
   display: grid;
   grid-template-rows: 4rem 1fr;
-  min-height: 100vh;
+  min-height: max(650px, 100vh);
 }
 
 .main {

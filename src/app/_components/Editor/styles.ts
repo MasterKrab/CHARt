@@ -17,6 +17,14 @@ export const StyledToolsContainer = styled.div`
     right: 0.5rem;
 `
 
+export const StyledTopLeftContainer = styled.section`
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    display: flex;
+    gap: 1rem;
+`
+
 export const StyledColorButton = styled.button<{ color: string }>`
     position: absolute;
     left: 0.5rem;

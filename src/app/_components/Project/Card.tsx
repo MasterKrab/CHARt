@@ -18,9 +18,14 @@ interface CardProps extends Project {
 const Card = ({ id, width, height, user, isEditMode = false }: CardProps) => {
 	const router = useRouter()
 
-	const handleClick = () => {
+	const handleClickEdit = () => {
 		if (!isEditMode) return
 		router.push(`/edit/${id}`)
+	}
+
+	const handleClickProjects = () => {
+		if (isEditMode) return
+		router.push(`/projects/${user.id}`)
 	}
 
 	return (
@@ -41,9 +46,12 @@ const Card = ({ id, width, height, user, isEditMode = false }: CardProps) => {
 				width={width * 50}
 				height={height * 50}
 				unoptimized={true}
-				onClick={handleClick}
+				onClick={handleClickEdit}
 			/>
-			<StyledBottomContainer>
+			<StyledBottomContainer
+				onClick={handleClickProjects}
+				$isClickable={!isEditMode}
+			>
 				<User name={user.name} image={user.image} />
 				{isEditMode && <DeleteButton id={id} />}
 			</StyledBottomContainer>

@@ -16,9 +16,12 @@ export const StyledContainer = styled(motion.article)<{
     cursor: ${({ $isClickable }) => ($isClickable ? 'pointer' : 'default')};
 `
 
-export const StyledBottomContainer = styled.div`
+export const StyledBottomContainer = styled.div<{
+	$isClickable: boolean
+}>`
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    cursor: ${({ $isClickable }) => ($isClickable ? 'pointer' : 'default')};
 `

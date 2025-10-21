@@ -12,9 +12,9 @@ export const StyledHeader = styled.header`
   top: 0;
   z-index: 10000;
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
+  gap: 1rem;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
 `
 
@@ -106,6 +106,7 @@ export const StyledToolTipContainer = styled(motion.div)`
   justify-content: center;
   gap: 0.5rem;
   --tooltip-bottom: -3.25rem;
+  margin-left: auto;
 `
 
 export const StyledToolTipButton = styled.button`

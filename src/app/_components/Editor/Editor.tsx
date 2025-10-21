@@ -15,10 +15,13 @@ import {
 	StyledEditorContainer,
 	StyledToolsContainer,
 	StyledSaveButton,
+	StyledTopLeftContainer,
 } from './styles'
 import { TOOLS_IMAGES } from './tools'
 
 import SaveIcon from '@/assets/icons/save.svg'
+import UndoIcon from '@/assets/icons/undo.svg'
+import RedoIcon from '@/assets/icons/redo.svg'
 
 const Editor = ({
 	id,
@@ -34,7 +37,7 @@ const Editor = ({
 	const [isOpenColorPicker, setIsOpenColorPicker] = useState(false)
 
 	const { dataArray } = useData(ref)
-	const { setData } = useDotting(ref)
+	const { setData, undo, redo } = useDotting(ref)
 	const { changeBrushColor, changeBrushTool, brushTool, brushColor } =
 		useBrush(ref)
 
@@ -76,98 +79,82 @@ const Editor = ({
 	}
 
 	return (
-		<>
-			<StyledEditorContainer>
-				<Dotting
-					ref={ref}
-					width="100%"
-					height="100%"
-					style={{
-						border: 'none',
-					}}
-					backgroundColor="white"
-					gridStrokeColor="rgba(0, 0, 0, 0.1)"
-				/>
-				{/* biome-ignore lint/a11y/useSemanticElements: <explanation> */}
-				<StyledToolsContainer role="listbox" aria-label="Herramientas">
-					{Object.entries(TOOLS_IMAGES).map(([tool, Icon]) => (
-						<StyledButtonTool
-							key={`editor-tool-${nanoid()}`}
-							// biome-ignore lint/a11y/useSemanticElements: <explanation>
-							role="option"
-							aria-selected={tool === brushTool}
-							$isSelected={tool === brushTool}
-							onClick={() => changeBrushTool(tool as BrushTool)}
-						>
-							<Icon width={15} height={15} />
-						</StyledButtonTool>
-					))}
-				</StyledToolsContainer>
+		<StyledEditorContainer>
+			<Dotting
+				ref={ref}
+				width="100%"
+				height="100%"
+				style={{
+					border: 'none',
+				}}
+				backgroundColor="white"
+				gridStrokeColor="rgba(0, 0, 0, 0.1)"
+				maxColumnCount={100}
+				maxRowCount={100}
+			/>
 
-				<StyledColorButton
-					role="switch"
-					aria-checked={isOpenColorPicker}
-					color={brushColor}
+			<StyledTopLeftContainer>
+				<StyledButtonTool
 					type="button"
-					onClick={handleToggleColorPicker}
-					aria-label={brushColor}
-				/>
-
-				{isOpenColorPicker && (
-					<StyledColorPickerContainer>
-						<ColorPicker
-							color={brushColor}
-							onChangeColor={(hex) => changeBrushColor(hex)}
-							onClickOutside={handleCloseColorPicker}
-						/>
-					</StyledColorPickerContainer>
-				)}
-
-				<StyledSaveButton
-					onClick={handleSave}
-					disabled={isSaved}
-					$animate={`${isSaving || isSaved}`}
+					onClick={undo}
+					aria-label="Restablecer cambio"
+					$isSelected={false}
 				>
-					<SaveIcon width="100%" height="100%" />
-				</StyledSaveButton>
-			</StyledEditorContainer>
+					<UndoIcon width={24} height={24} />
+				</StyledButtonTool>
+				<StyledButtonTool
+					type="button"
+					onClick={redo}
+					aria-label="Retroceder cambio"
+					$isSelected={false}
+				>
+					<RedoIcon width={24} height={24} />
+				</StyledButtonTool>
+			</StyledTopLeftContainer>
 
-			{/* <style jsx>{`
-        .editor{
-          height: 100%;
-          overflow-x: hidden;
-          position: relative;
-        }
+			{/* biome-ignore lint/a11y/useSemanticElements: <explanation> */}
+			<StyledToolsContainer role="listbox" aria-label="Herramientas">
+				{Object.entries(TOOLS_IMAGES).map(([tool, Icon]) => (
+					<StyledButtonTool
+						key={`editor-tool-${nanoid()}`}
+						// biome-ignore lint/a11y/useSemanticElements: <explanation>
+						role="option"
+						aria-selected={tool === brushTool}
+						$isSelected={tool === brushTool}
+						onClick={() => changeBrushTool(tool as BrushTool)}
+					>
+						<Icon width={15} height={15} />
+					</StyledButtonTool>
+				))}
+			</StyledToolsContainer>
 
-        .tools{
-          position: absolute;
-          bottom: 0.5rem;
-          right: 0.5rem;
-        }
+			<StyledColorButton
+				role="switch"
+				aria-checked={isOpenColorPicker}
+				color={brushColor}
+				type="button"
+				onClick={handleToggleColorPicker}
+				aria-label={brushColor}
+			/>
 
-        @media screen and (min-width: 50rem) {
-          .bar{
-          }
-        }
+			{isOpenColorPicker && (
+				<StyledColorPickerContainer>
+					<ColorPicker
+						color={brushColor}
+						onChangeColor={(hex) => changeBrushColor(hex)}
+						onClickOutside={handleCloseColorPicker}
+					/>
+				</StyledColorPickerContainer>
+			)}
 
-        .button-color{
-          position: absolute;
-          left: 0.5rem;
-          bottom: 0.5rem;
-          width: 2rem;
-          height: 2rem;
-          background-color: ${brushColor};
-          border: 0.25rem solid white;
-          box-shadow: 0 0 1rem rgba(0, 0, 0, 0.25);
-        }
-
-        .color-picker {
-          position: absolute;
-          bottom: 3.5rem;
-          left: 0.5rem;
-        }
-      `}</style> */}
-		</>
+			<StyledSaveButton
+				onClick={handleSave}
+				disabled={isSaved}
+				$animate={`${isSaving || isSaved}`}
+			>
+				<SaveIcon width="100%" height="100%" />
+			</StyledSaveButton>
+		</StyledEditorContainer>
 	)
 }
 
