@@ -12,7 +12,9 @@ import ThemeProvider from '@/styles/ThemeProvider'
 import Header from '@/app/_components/Header/Header'
 import WelcomeMessage from '@/app/_components/WelcomeMessage'
 
-const pixelify = Pixelify_Sans()
+const pixelify = Pixelify_Sans({
+	subsets: ['latin'],
+})
 
 export default function RootLayout({
 	children,
