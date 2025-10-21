@@ -4,7 +4,6 @@ import Image from 'next/image'
 import { useState, type MouseEventHandler } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 
 import User from '@/app/_components/User/User'
@@ -22,7 +21,7 @@ import {
 	StyledLink,
 	StyledToolTipContainer,
 	StyledToolTipButton,
-	StyledOpenToolTipButton,https://cha-rt.vercel.app/
+	StyledOpenToolTipButton,
 	StyledButtonMenu,
 } from './styles'
 
@@ -97,7 +96,7 @@ const Header = () => {
 					/>
 				)}
 
-				{(session && isDesktop) && <CreateProjectButton />}
+				{session && isDesktop && <CreateProjectButton />}
 
 				{session?.user ? (
 					<StyledToolTipContainer
