@@ -117,11 +117,15 @@ export const StyledToolTipContainer = styled(motion.div)`
   justify-content: center;
   gap: 0.5rem;
   width: min-content;
-  --tooltip-bottom: -5.25rem;
+  --tooltip-bottom: -6.5rem;
 
 `
 
 export const StyledToolTipButton = styled.button<{ theme: Theme }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;  
   text-align: center;
   width: 100%;
   color: ${({ theme }) => theme.primary};

@@ -157,6 +157,13 @@ const Header = () => {
 													width={24}
 													height={24}
 													alt={name}
+													style={{
+														width: '2rem',
+														height: '2rem',
+														backgroundColor: 'white',
+														borderRadius: '50%',
+														padding: '0.25rem',
+													}}
 												/>
 												{name}
 											</StyledToolTipButton>
