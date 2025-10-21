@@ -152,6 +152,12 @@ const Header = () => {
 												type="button"
 												onClick={() => signIn(id)}
 											>
+												<Image
+													src={`/assets/icons/${id}.svg`}
+													width={24}
+													height={24}
+													alt={name}
+												/>
 												{name}
 											</StyledToolTipButton>
 										</li>

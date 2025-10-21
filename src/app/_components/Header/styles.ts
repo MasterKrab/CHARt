@@ -10,7 +10,7 @@ export const StyledHeader = styled.header<{
 }>` 
   position: sticky;
   top: 0;
-  z-index: 10000;
+  z-index: 1000;
   display: flex;
   align-items: center;
   padding: 1rem 2rem;
@@ -117,13 +117,14 @@ export const StyledToolTipContainer = styled(motion.div)`
   justify-content: center;
   gap: 0.5rem;
   width: min-content;
-  --tooltip-bottom: -3.25rem;
-  
+  --tooltip-bottom: -5.25rem;
+
 `
 
-export const StyledToolTipButton = styled.button`
+export const StyledToolTipButton = styled.button<{ theme: Theme }>`
   text-align: center;
   width: 100%;
+  color: ${({ theme }) => theme.primary};
 `
 
 export const StyledOpenToolTipButton = styled.button<{ theme: Theme }>`

@@ -8,25 +8,31 @@ import User from '@/app/_components/User/User'
 import DeleteButton from '@/app/_components/DeleteProjectButton/DeleteProjectButton'
 import createRectanglesPatterns from '@/utils/createRectanglesPatterns'
 
-import { StyledContainer, StyledBottomContainer } from './cardStyles'
-
+import { useTopLoader } from 'nextjs-toploader'
 import { useRouter } from 'next/navigation'
+
+import { StyledContainer, StyledBottomContainer } from './cardStyles'
 
 interface CardProps extends Project {
 	isEditMode?: boolean
 }
 
 const Card = ({ id, width, height, user, isEditMode = false }: CardProps) => {
+	const loader = useTopLoader()
 	const router = useRouter()
 
-	const handleClickEdit = () => {
+	const handleClickEdit = async () => {
 		if (!isEditMode) return
+
+		loader.start()
 		router.push(`/edit/${id}`)
 	}
 
 	const handleClickProjects = () => {
 		if (isEditMode) return
-		router.push(`/projects/${user.id}`)
+
+		loader.start()
+		router.push(`/projects/${user.id}`, {})
 	}
 
 	return (

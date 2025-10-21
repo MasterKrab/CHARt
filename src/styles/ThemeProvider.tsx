@@ -17,11 +17,13 @@ const ThemeProvider = ({
 }: {
 	children: React.ReactNode
 }) => {
-	const [theme, setTheme] = useState<ThemeValue>(THEMES.DARK)
+	const [theme, setTheme] = useState<ThemeValue>(
+		(window.localStorage.getItem('theme') as ThemeValue) || THEMES.LIGHT,
+	)
 
 	const changeTheme = (theme: ThemeValue) => {
-		console.log(theme)
 		setTheme(theme)
+		window.localStorage.setItem('theme', theme)
 	}
 
 	return (
