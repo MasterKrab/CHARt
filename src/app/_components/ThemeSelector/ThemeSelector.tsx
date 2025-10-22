@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import { useContext } from 'react'
 import { ThemeContext } from '@/styles/ThemeProvider'
 import { THEMES, type ThemeValue } from '@/styles/theme'
@@ -21,7 +21,7 @@ const ThemeSelector = () => {
 
 	const themes = Object.values(THEMES) as ThemeValue[]
 
-	const toggleTheme = () => {
+	const toggleTheme = async () => {
 		const newTheme = themes[
 			(themes.indexOf(theme) + 1) % themes.length
 		] as ThemeValue

@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, type MouseEventHandler } from 'react'
+import { use, useEffect, useState, type MouseEventHandler } from 'react'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useRouter } from 'next/navigation'
@@ -33,10 +33,10 @@ import './styles.css'
 const Header = () => {
 	const { data: session, status } = useSession()
 
-	const router = useRouter()
 	const providers = useProviders()
 	const [isOpenTooltip, setIsOpenTooltip] = useState(false)
 	const [isOpenMenu, setIsOpenMenu] = useState(false)
+	const [isLoaded, setIsLoaded] = useState(false)
 	const isDesktop = useMatchMedia('(min-width: 768px)')
 
 	useBodyClassNames(!isDesktop && isOpenMenu ? ['open-menu'] : [])
@@ -53,6 +53,10 @@ const Header = () => {
 	const closeMenu = () => {
 		setIsOpenMenu(false)
 	}
+
+	useEffect(() => {
+		setIsLoaded(true)
+	})
 
 	return (
 		<AnimatePresence>
@@ -92,7 +96,7 @@ const Header = () => {
 					</StyledNavigation>
 				)}
 
-				{!isDesktop && (
+				{isLoaded && !isDesktop && (
 					<StyledButtonMenu
 						onClick={() => setIsOpenMenu(!isOpenMenu)}
 						$isOpen={`${isOpenMenu}`}
