@@ -66,7 +66,7 @@ export const StyledButtonMenu = styled.button<{
 	$isOpen: string
 }>`
   position: relative;
-  z-index: 100000;
+  z-index: 100000000;
   display: block;
   justify-self: end;
   width: 2rem;
