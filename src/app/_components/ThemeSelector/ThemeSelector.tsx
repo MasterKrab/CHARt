@@ -4,7 +4,6 @@ import { AnimatePresence } from 'framer-motion'
 import { useContext } from 'react'
 import { ThemeContext } from '@/styles/ThemeProvider'
 import { THEMES, type ThemeValue } from '@/styles/theme'
-import { nanoid } from 'nanoid'
 
 import SunIcon from '@/assets/icons/sun.svg'
 import MoonIcon from '@/assets/icons/moon.svg'
@@ -42,7 +41,7 @@ const ThemeSelector = () => {
 
 					return (
 						<StyledIconContainer
-							key={nanoid()}
+							key={theme}
 							initial={{ scale: 0, rotate: '260deg' }}
 							animate={{ scale: 1, rotate: 0 }}
 						>
